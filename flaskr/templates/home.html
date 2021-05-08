@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Hello! This is DOGECOIN!{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+{% for message in get_flashed_messages() %}
+<div class="flash">{{ message }}</div>
+{% endfor %}
+{% for row in g.data %}
+<div class="row">Timesamp: {{ row[1] }} --- 24h change: {{ row[3] }} --- 7d change: {{ row[2] }} </div>
+{% endfor %}
+{% endblock %}

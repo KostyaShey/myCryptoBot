@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}For API Testing{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  
+<form action='./fetch' method="post">
+    <button name="test" type="submit">Fetch Data from coinmarketcap</button>
+</form>
+
+<form action='./write' method="post">
+    <button name="write" type="submit">Write Data from coinmarketcap to DB</button>
+</form>
+
+<form action='./send' method="post">
+  <button name="send" type="submit">Send Data from coinmarketcap to Telegram</button>
+</form>
+
+{% endblock %}
