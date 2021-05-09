@@ -17,8 +17,9 @@ def send_data_to_telegram():
         message_24h = f'24h changes: {percent_change_24h}'
         message_7d = f'7d changes: {percent_change_7d}'
         telegram_send.send(messages=["DOGE MUCH WOW", message_24h, message_7d, "https://coinmarketcap.com/currencies/dogecoin/"])
-
-    if percent_change_24h < -100 or percent_change_7d < -200:
+    elif percent_change_24h < -100 or percent_change_7d < -200:
         message_24h = f'24h changes: {percent_change_24h}'
         message_7d = f'7d changes: {percent_change_7d}'
         telegram_send.send(messages=["DOGE NOT WOW", message_24h, message_7d, "https://coinmarketcap.com/currencies/dogecoin/"])
+    else:
+        telegram_send.send(messages=["ZZZZZZZZZ"])
