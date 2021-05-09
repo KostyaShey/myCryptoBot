@@ -5,10 +5,26 @@
 {% endblock %}
 
 {% block content %}
-{% for message in get_flashed_messages() %}
-<div class="flash">{{ message }}</div>
-{% endfor %}
-{% for row in g.data %}
-<div class="row">Timesamp: {{ row[1] }} --- 24h change: {{ row[3] }} --- 7d change: {{ row[2] }} --- price: {{ row[4] }}</div>
-{% endfor %}
+
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+
+  <div class="selector-text">
+    <p>Change when to notifi on telegram:</p>
+  </div>
+  <div class="selector">
+    <form action='./submit' method="post">
+      24h top: <input type="number" value={{ g.config[3] }} name="high_24h"> 7d top: <input type="number" value={{ g.config[5] }} name="high_7d">
+      24h low: <input type="number" value={{ g.config[2] }} name="low_24h"> 7d low: <input type="number" value={{ g.config[4] }} name="low_7d">
+      <button name="submit" type="submit">Change</button>
+    </form>
+  </div>
+
+  <div class="table">
+    {% for row in g.data %}
+      <div class="row">Timesamp: {{ row[1] }} --- 24h change: {{ row[3] }} --- 7d change: {{ row[2] }} --- price: {{ row[4] }}</div>
+    {% endfor %}
+  </div>
+  
 {% endblock %}

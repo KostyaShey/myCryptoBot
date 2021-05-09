@@ -1,5 +1,5 @@
 import os
-from flask import (Flask, g)
+from flask import (Flask, g, request)
 from flask import render_template
 from flaskr.db import get_db
 import time
@@ -38,6 +38,20 @@ def create_app(test_config=None):
     def hello():
         g.data = get_db().execute(
             'SELECT * FROM responces')
+        g.config = get_db().execute(
+            'SELECT * FROM config ORDER BY id DESC LIMIT 1').fetchone()
+        return render_template('home.html')
+
+    @app.route('/submit', methods=(['POST']))
+    def update_config_db():
+        if request.method == 'POST':
+            get_db().execute(
+                f'UPDATE config SET low_24h = {request.form["low_24h"]}, high_24h = {request.form["high_24h"]}, low_7d = {request.form["low_7d"]}, high_7d = {request.form["high_7d"]} WHERE id = 1')
+            get_db().commit()
+        g.data = get_db().execute(
+            'SELECT * FROM responces')
+        g.config = get_db().execute(
+            'SELECT * FROM config ORDER BY id DESC LIMIT 1').fetchone()        
         return render_template('home.html')
 
     from . import coinmarketcap_api
