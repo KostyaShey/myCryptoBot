@@ -1,0 +1,11 @@
+body {
+    margin: 2em;
+    background-image: url("dogecoin.jpg");
+}
+
+.content {
+    background-color: azure;
+    margin: auto;
+    width: 75%;
+    padding: 2em;
+}
