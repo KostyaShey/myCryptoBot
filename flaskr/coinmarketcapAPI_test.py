@@ -60,9 +60,9 @@ def write_data_to_db():
 
         db = get_db()
         db.execute(
-                'INSERT INTO responces (percent_change_7d, percent_change_24h) VALUES (?, ?)',
-                (doge['quote']['USD']['percent_change_7d'], doge['quote']['USD']['percent_change_24h'])
-            )
+            'INSERT INTO responces (percent_change_7d, percent_change_24h, price) VALUES (?, ?, ?)',
+            (doge['quote']['USD']['percent_change_7d'], doge['quote']['USD']['percent_change_24h'], doge['quote']['USD']['price'])
+        )
         db.commit()
 
     return render_template('test_api.html')

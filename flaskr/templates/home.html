@@ -9,6 +9,6 @@
 <div class="flash">{{ message }}</div>
 {% endfor %}
 {% for row in g.data %}
-<div class="row">Timesamp: {{ row[1] }} --- 24h change: {{ row[3] }} --- 7d change: {{ row[2] }} </div>
+<div class="row">Timesamp: {{ row[1] }} --- 24h change: {{ row[3] }} --- 7d change: {{ row[2] }} --- price: {{ row[4] }}</div>
 {% endfor %}
 {% endblock %}
