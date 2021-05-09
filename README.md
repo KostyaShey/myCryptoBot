@@ -6,6 +6,7 @@ Intended to be used on a rasberry pi with linux installed and internet connectio
 Add .env file to root it should include following props and values:
 COINMARKETCAPKEY=
 SECRET_KEY=
+FLASK_APP=flaskr
 
 get api credentials here https://pro.coinmarketcap.com/account
 
@@ -17,5 +18,5 @@ $ export FLASK_APP=flaskr
 $ flask run
 
 set up these cronjobs after done with the config:
-flask coinmarketcap_api fetch
-flask telegram_notifier check
+$ flask coinmarketcap_api fetch
+$ flask telegram_notifier check

@@ -10,16 +10,15 @@ def fetch_from_db():
 @bp.cli.command('check')
 def send_data_to_telegram():
     data = fetch_from_db().fetchone()
+    timestamp = data[1]
     percent_change_7d = data[2]
     percent_change_24h = data[3]
+    message_24h = f'24h changes: {percent_change_24h}'
+    message_7d = f'7d changes: {percent_change_7d}'
 
-    if percent_change_24h > 100 or percent_change_7d > 200:
-        message_24h = f'24h changes: {percent_change_24h}'
-        message_7d = f'7d changes: {percent_change_7d}'
-        telegram_send.send(messages=["DOGE MUCH WOW", message_24h, message_7d, "https://coinmarketcap.com/currencies/dogecoin/"])
+    if percent_change_24h > 100 or percent_change_7d > 200: 
+        telegram_send.send(messages=[f'{timestamp}\nDOGE MUCH WOW\n{message_24h}\n{message_7d}\nhttps://coinmarketcap.com/currencies/dogecoin/'])
     elif percent_change_24h < -100 or percent_change_7d < -200:
-        message_24h = f'24h changes: {percent_change_24h}'
-        message_7d = f'7d changes: {percent_change_7d}'
-        telegram_send.send(messages=["DOGE NOT WOW", message_24h, message_7d, "https://coinmarketcap.com/currencies/dogecoin/"])
+        telegram_send.send(messages=[f'{timestamp}\nDOGE NOT WOW\n{message_24h}\n{message_7d}\nhttps://coinmarketcap.com/currencies/dogecoin/'])
     else:
-        telegram_send.send(messages=["ZZZZZZZZZ"])
+        telegram_send.send(messages=["zzZZzZZzZZzZzzz"])
