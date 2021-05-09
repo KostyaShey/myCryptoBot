@@ -28,10 +28,9 @@ jobs:
         source venv/bin/activate
 
     - name: Install dependencies
-      run: pip install -r requirements.txt
-
-    - name: Set application path
-    - run: export FLASK_APP=flaskr
+      run: |
+        pip install -r requirements.txt
+        export FLASK_APP=flaskr
 
     # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
