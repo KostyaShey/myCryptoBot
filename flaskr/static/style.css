@@ -13,3 +13,7 @@ body {
 .table {
     padding: 1em 0 0 0;
 }
+
+.row {
+    padding: 0.4em 0 0 0;
+}
