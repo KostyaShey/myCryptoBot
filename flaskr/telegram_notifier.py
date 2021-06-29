@@ -66,3 +66,32 @@ def send_data_to_telegram(state):
                 f'UPDATE config SET sleep_mode = {0} WHERE id = 1')
             get_db().commit()
         telegram_send.send(messages=[f'Sleepmode is {state}'])
+
+@bp.cli.command('threshold')
+#@click.argument('state')
+def send_data_to_telegram():
+
+    direction_values = ['low', 'high']
+    interval_values = ['7d', '24h']
+
+    direction = ''
+    interval = 0
+    new_value = ''
+
+    while direction not in direction_values:
+        direction = input('change values for increase or decrease? "low" or "high" ')
+        print('wrong input. please select either "low" or "high"' )
+    while interval not in interval_values:
+        interval = input('change values for what interval? "7d" or "24h" ')
+        print('wrong input. please select either "7d" or "24h"' )
+    while type(new_value) != int:
+        try:
+            new_value = int(input('new value? 7/24 '))
+        except:
+            print('wrong input. please select select a number' )
+
+    telegram_send.send(messages=[f'Setting new threshold for {interval} interval for {direction} direction: {str(new_value)}'])
+
+    get_db().execute(
+        f'UPDATE config SET {direction}_{interval} = {str(new_value)} WHERE id = 1')
+    get_db().commit()
