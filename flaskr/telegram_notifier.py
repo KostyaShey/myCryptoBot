@@ -1,6 +1,7 @@
 import telegram_send
 from flaskr.db import get_db
 from flask import Blueprint
+import click
 
 bp = Blueprint('telegram_notifier', __name__)
 
@@ -21,6 +22,10 @@ def send_data_to_telegram():
     config_high_24h = config[3]
     config_low_7d = config[4]
     config_high_7d = config[5]
+    if config[6] == 0:
+        sleep_mode = False
+    else:
+        sleep_mode = True
 
     data = fetch_from_db()
     timestamp = data[1]
@@ -31,11 +36,33 @@ def send_data_to_telegram():
     message_7d = f'7d changes: {percent_change_7d}'
     message_price = f'new price: {price}'
 
-    if percent_change_24h > config_high_24h or percent_change_7d > config_high_7d:
-        telegram_send.send(messages=[
-                           f'{timestamp}\nDOGE MUCH WOW\n\n{message_price}\n\n{message_24h}\n{message_7d}\n\nhttps://coinmarketcap.com/currencies/dogecoin/'])
-    elif percent_change_24h < config_low_24h or percent_change_7d < config_low_7d:
-        telegram_send.send(messages=[
-                           f'{timestamp}\nDOGE NOT WOW\n\n{message_price}\n\n{message_24h}\n{message_7d}\n\nhttps://coinmarketcap.com/currencies/dogecoin/'])
+    try:
+        if percent_change_24h > config_high_24h or percent_change_7d > config_high_7d:
+            telegram_send.send(messages=[
+                            f'{timestamp}\nDOGE MUCH WOW\n\n{message_price}\n\n{message_24h}\n{message_7d}\n\nhttps://coinmarketcap.com/currencies/dogecoin/'])
+        elif percent_change_24h < config_low_24h or percent_change_7d < config_low_7d:
+            telegram_send.send(messages=[
+                            f'{timestamp}\nDOGE NOT WOW\n\n{message_price}\n\n{message_24h}\n{message_7d}\n\nhttps://coinmarketcap.com/currencies/dogecoin/'])
+        elif sleep_mode:
+            telegram_send.send(messages=["zzZZzZZzZZzZzzz"])
+    except Exception as e:
+        print(e)
+
+@bp.cli.command('sleepmode')
+@click.argument('state')
+def send_data_to_telegram(state):
+
+    states = ['on', 'off']
+
+    if state not in states:
+        print('sleepmode argumets are "on" and "off". other inputs are restricted')
     else:
-        telegram_send.send(messages=["zzZZzZZzZZzZzzz"])
+        if state == 'on':
+            get_db().execute(
+                f'UPDATE config SET sleep_mode = {1} WHERE id = 1')
+            get_db().commit()
+        else:
+            get_db().execute(
+                f'UPDATE config SET sleep_mode = {0} WHERE id = 1')
+            get_db().commit()
+        telegram_send.send(messages=[f'Sleepmode is {state}'])

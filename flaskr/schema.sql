@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS config (
   low_24h INTEGER NOT NULL,
   high_24h INTEGER NOT NULL,
   low_7d INTEGER NOT NULL,
-  high_7d INTEGER NOT NULL
+  high_7d INTEGER NOT NULL,
+  sleep_mode INTEGER NOT NULL
 );
 
-INSERT INTO config (low_24h, high_24h, low_7d, high_7d) VALUES (-100, 100, -200, 200)
+INSERT INTO config (low_24h, high_24h, low_7d, high_7d, sleep_mode) VALUES (-100, 100, -200, 200, 1)

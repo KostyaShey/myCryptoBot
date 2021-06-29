@@ -1,17 +1,16 @@
 # myCryptoBot
-bot to track DOGECOIN grows. Much WOW!
+Bot to track DOGECOIN grows. Much WOW!
 
-Intended to be used on a rasberry pi with linux installed and internet connection 
+Intended to be used on a rasberry pi with NOOBS (https://github.com/raspberrypi/noobs) installed and internet connection 
 
-Add .env file to root it should include following props and values:
-COINMARKETCAPKEY=
-SECRET_KEY=
-FLASK_APP=flaskr
+Get coinmarketcap API credentials here https://pro.coinmarketcap.com/account
 
-get api credentials here https://pro.coinmarketcap.com/account
-
-use this tutorial to configure telegram bot: https://medium.com/@robertbracco1/how-to-write-a-telegram-bot-to-send-messages-with-python-bcdf45d0a580
+Use this tutorial to configure telegram bot: https://medium.com/@robertbracco1/how-to-write-a-telegram-bot-to-send-messages-with-python-bcdf45d0a580
 
 set up these cronjobs after done with the config:
   - $ flask coinmarketcap_api fetch
   - $ flask telegram_notifier check
+
+You can use this command to turn sleepmode on and off:
+flask telegram_notifier sleepmode
+Arguments: 'on' and 'off'
