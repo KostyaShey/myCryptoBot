@@ -80,9 +80,13 @@ def send_data_to_telegram():
 
     while direction not in direction_values:
         direction = input('change values for increase or decrease? "low" or "high" ')
+        if direction in direction_values:
+            break
         print('wrong input. please select either "low" or "high"' )
     while interval not in interval_values:
         interval = input('change values for what interval? "7d" or "24h" ')
+        if interval in interval_values:
+            break
         print('wrong input. please select either "7d" or "24h"' )
     while type(new_value) != int:
         try:
